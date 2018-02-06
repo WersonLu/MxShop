@@ -18,9 +18,12 @@ from django.conf.urls import url
 import xadmin
 from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
+from goods.views_base import GoodsListView
 
-# 用第三方后台管理取代自带的
 urlpatterns = [
+    # 用第三方后台管理取代自带的
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    # 商品列表页
+    url(r'^goods/$', GoodsListView.as_view(), name="goods-list")
 ]
