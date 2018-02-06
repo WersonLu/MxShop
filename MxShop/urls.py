@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 # from django.contrib import admin
 import xadmin
+from django.views.static import serve
+from MxShop.settings import MEDIA_ROOT
 
 # 用第三方后台管理取代自带的
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 ]
