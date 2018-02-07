@@ -26,8 +26,27 @@ from goods.models import Goods, GoodsCategory
 #     # def create(self, validated_data):
 #     #     return Goods.objects.create(**validated_data)
 # 方法二
+class CategorySerializer3(serializers.ModelSerializer):
+    class Meta:
+        model = GoodsCategory
+
+        fields = "__all__"
+
+
+class CategorySerializer2(serializers.ModelSerializer):
+    sub_cat = CategorySerializer3(many=True)
+
+    class Meta:
+        model = GoodsCategory
+
+        fields = "__all__"
+
 
 class CategorySerializer(serializers.ModelSerializer):
+    """商品类别序列化"""
+
+    sub_cat = CategorySerializer2(many=True)
+
     class Meta:
         model = GoodsCategory
 
@@ -35,8 +54,18 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class GoodsSerializer(serializers.ModelSerializer):
-    category=CategorySerializer()
+    category = CategorySerializer()
+
     class Meta:
         model = Goods
         # fields = ('name', 'click_num', 'market_price', 'add_time')
         fields = "__all__"
+
+#
+# class GoodsCategorySerializer(serializers.Serializer):
+#
+#
+#     class Meta:
+#         model = GoodsCategory
+#
+#         fields = "__all__"

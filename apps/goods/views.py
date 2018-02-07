@@ -2,14 +2,14 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from goods.serializer import GoodsSerializer
+from goods.serializer import GoodsSerializer, CategorySerializer
 # from rest_framework.views import APIView
 # from rest_framework.response import Response
 
 from rest_framework import mixins, viewsets
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
-from .models import Goods
+from .models import Goods, GoodsCategory
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import GoodsFilter
 
@@ -81,3 +81,11 @@ class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     search_fields = ('name', 'goods_desc')
     # 排序
     ordering_fields = ('sold_num', 'add_time')
+
+
+class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    """
+    商品分类数据
+    """
+    queryset = GoodsCategory.objects.all()
+    serializer_class = CategorySerializer
