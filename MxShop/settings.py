@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_filters',
     'xadmin',
+    'rest_framework',
 
 ]
 
@@ -132,3 +133,8 @@ STATIC_URL = '/static/'
 # 识别静态文件路径
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# rest_framework
+# REST_FRAMEWORK = {
+#     'PAGE_SIZE': 10,
+# }
