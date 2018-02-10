@@ -14,6 +14,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import GoodsFilter
 
 from rest_framework import filters
+from rest_framework.authentication import TokenAuthentication
 
 
 # 商品分页设置
@@ -21,7 +22,7 @@ class GoodsPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
-    page_query_param = "p"
+    page_query_param = "page"
 
 
 # 商品列表页接口
@@ -65,7 +66,8 @@ class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = GoodsSerializer
     # 分页
     pagination_class = GoodsPagination
-
+    # token 验证
+    authentication_classes = (TokenAuthentication,)
     # def get_queryset(self):
     #     queryset = Goods.objects.all()
     #     price_min = self.request.query_params.get("price_min", 0)
@@ -80,7 +82,7 @@ class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     # 搜索也可设置条件,模糊,精确等
     search_fields = ('name', 'goods_desc')
     # 排序
-    ordering_fields = ('sold_num', 'add_time')
+    ordering_fields = ('sold_num', 'shop_price')
 
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):

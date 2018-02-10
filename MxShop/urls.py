@@ -21,14 +21,15 @@ from MxShop.settings import MEDIA_ROOT
 # from goods.views_base import GoodsListView
 from rest_framework.documentation import include_docs_urls
 from goods.views import GoodsListViewSet, CategoryViewSet
-
+from rest_framework.authtoken import views
 # 视图路由配置
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token
 
 router = DefaultRouter()
 
 router.register(r'goods', GoodsListViewSet, base_name="goods")
-router.register(r'category', CategoryViewSet, base_name="categorys")
+router.register(r'categorys', CategoryViewSet, base_name="categorys")
 # goods_list = GoodsListViewSet.as_view({
 #     'get': 'list',
 # })
@@ -42,6 +43,10 @@ urlpatterns = [
     url(r'^', include(router.urls)),
 
     # url(r'^')
-    url(r'^docs/', include_docs_urls(title="我的商城"))
+    url(r'^docs/', include_docs_urls(title="我的商城")),
+    # drf 自带的token认证模式
+    url(r'^api-token-auth/', views.obtain_auth_token),
+    # jwt 认证模式
+    url(r'^login/', obtain_jwt_token),
 
 ]
